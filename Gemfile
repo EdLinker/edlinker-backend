@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.1'
 
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
-gem 'sqlite3', '~> 1.4'
+#gem 'sqlite3', '~> 1.4'
 
 gem 'activeadmin'
 gem 'devise'
@@ -39,4 +39,5 @@ group :test do
   gem 'webdrivers'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
