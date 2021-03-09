@@ -38,5 +38,5 @@ jobs:
         run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web 
       
       - name: Migarte DB
-        run: heroku run rake db:migrate --app ${{ secrets.HEROKU_APP_NAME }}
+        run: heroku run rake db:migrate -a ${{ secrets.HEROKU_APP_NAME }}
         
