@@ -6,6 +6,7 @@ class CreateStudents < ActiveRecord::Migration[6.0]
       t.string :patronymic
       t.string :phone_number
       t.string :email
+      t.belongs_to :group, foreign_key: true
 
       t.timestamps
     end

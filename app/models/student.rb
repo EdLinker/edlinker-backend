@@ -1,4 +1,3 @@
 class Student < ApplicationRecord
-  has_one :groups_student
-  has_one :group
+  belongs_to :group
 end

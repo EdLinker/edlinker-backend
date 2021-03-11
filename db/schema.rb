@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_133400) do
+ActiveRecord::Schema.define(version: 2021_03_06_132101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,18 +45,9 @@ ActiveRecord::Schema.define(version: 2021_03_06_133400) do
     t.string "name"
     t.string "tuition_form"
     t.integer "course_number"
+    t.integer "group_leader_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "groups_students", force: :cascade do |t|
-    t.bigint "group_id"
-    t.bigint "student_id"
-    t.string "group_leader"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["group_id"], name: "index_groups_students_on_group_id"
-    t.index ["student_id"], name: "index_groups_students_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -65,10 +56,11 @@ ActiveRecord::Schema.define(version: 2021_03_06_133400) do
     t.string "patronymic"
     t.string "phone_number"
     t.string "email"
+    t.bigint "group_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_students_on_group_id"
   end
 
-  add_foreign_key "groups_students", "groups"
-  add_foreign_key "groups_students", "students"
+  add_foreign_key "students", "groups"
 end
