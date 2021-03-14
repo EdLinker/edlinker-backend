@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_13_214550) do
+ActiveRecord::Schema.define(version: 2021_03_13_223559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,17 @@ ActiveRecord::Schema.define(version: 2021_03_13_214550) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "auditoriums", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "subject_id"
+    t.bigint "teacher_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_auditoriums_on_group_id"
+    t.index ["subject_id"], name: "index_auditoriums_on_subject_id"
+    t.index ["teacher_id"], name: "index_auditoriums_on_teacher_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -78,5 +89,8 @@ ActiveRecord::Schema.define(version: 2021_03_13_214550) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "auditoriums", "groups"
+  add_foreign_key "auditoriums", "subjects"
+  add_foreign_key "auditoriums", "teachers"
   add_foreign_key "students", "groups"
 end
