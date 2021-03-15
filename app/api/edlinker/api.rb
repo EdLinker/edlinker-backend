@@ -7,5 +7,4 @@ class Edlinker::API < Grape::API
   end
 
   mount Edlinker::Groups
-
 end
