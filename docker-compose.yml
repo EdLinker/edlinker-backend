@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - data-postgres:/var/lib/postgresql/data
     env_file:
       - .env
     ports:
@@ -24,4 +24,5 @@ services:
       - .env
 volumes:
   bundle:
+  data-postgres:
   
