@@ -9,6 +9,12 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY . /app
 
+ENV BUNDLE_PATH /bundle
+ENV PATH /app/bin:$PATH
+
+RUN gem install bundler -v 2.1.4 --no-document
+RUN bundle install
+
 EXPOSE 3000
 
 # Start the main process.
