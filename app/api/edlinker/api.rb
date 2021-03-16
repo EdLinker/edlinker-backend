@@ -1,6 +1,10 @@
 class Edlinker::API < Grape::API
   format :json
+  prefix :api
+
   get :status do
-    { status: :ok }
+    (:ok)
   end
+
+  mount Edlinker::Groups
 end
