@@ -1,3 +1,3 @@
 ActiveAdmin.register Group do
-  permit_params :name, :tuition_form, :course_number, :group_leader_id
+  permit_params :name, :tuition_form, :course_number, :group_leader_id, :auditorium_id
 end
