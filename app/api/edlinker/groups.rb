@@ -9,11 +9,11 @@ class Edlinker::Groups < Grape::API
   end
   get ':teacher_id/auditoriums' do
     current_teacher = Teacher.find(params[:teacher_id])
-    current_teacher.groups.includes(:students, :subjects).map do |group|
+    current_teacher.groups.includes(:students, :subject).map do |group|
       {
           group_name: group.name,
           student_count: group.students.count,
-          subject: group.subjects,
+          subject: group.subject.name,
           course_number: group.course_number,
           group_leader: group.group_leader_id
       }
