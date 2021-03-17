@@ -5,6 +5,7 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.string  :description
       t.string  :link
       t.string  :status
+      t.belongs_to :student, foreign_key: true
       t.timestamps
     end
   end
