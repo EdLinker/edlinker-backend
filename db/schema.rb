@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(version: 2021_03_15_164609) do
     t.index ["group_leader_id"], name: "index_groups_on_group_leader_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.integer "author_id"
+    t.integer "task_id"
+    t.string "author_type"
+    t.text "body"
+    t.string "link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "students", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -76,6 +86,15 @@ ActiveRecord::Schema.define(version: 2021_03_15_164609) do
 
   create_table "subjects", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "description"
+    t.string "link"
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
