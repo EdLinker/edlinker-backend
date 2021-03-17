@@ -2,5 +2,6 @@ class Task < ApplicationRecord
   has_many   :messages
   belongs_to :student
 
-  enum status %i[NEW IN_PROGRESS DONE]
+  STATUSES = %i[new in_progress done].freeze
+  enum status STATUSES
 end
