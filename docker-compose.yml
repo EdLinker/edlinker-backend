@@ -11,17 +11,24 @@ services:
       - 5431:5432
   backend:
     container_name: backend_app
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"    
     volumes:
       - .:/app
-      - bundle:/usr/local/bundle
+      - bundle:/bundle
     ports:
       - 3000:3000
     depends_on:
       - db
     env_file:
       - .env
+  bundle:
+    image: busybox
+    volumes:
+      - bundle:/bundle
+
 volumes:
   bundle:
   data-postgres:
