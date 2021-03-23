@@ -7,7 +7,7 @@ class Edlinker::AuthTeacher < Grape::API
     end
     post do
       teacher = Teacher.authenticate(params[:email], params[:password])
-      payload = { teacher_id: teacher }
+      payload = { teacher_id: teacher.id }
       token = JWT.encode payload, nil, 'none'
       { token: token }
     end
@@ -18,7 +18,7 @@ class Edlinker::AuthTeacher < Grape::API
     end
     get do
       teacher_data, _= JWT.decode params[:token], nil, false
-      teacher = teacher.find(teacher_data['teacher_id'])
+      teacher = Teacher.find(teacher_data['teacher_id'])
       teacher
     end
   end

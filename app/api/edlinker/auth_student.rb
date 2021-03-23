@@ -12,15 +12,15 @@ class Edlinker::AuthStudent < Grape::API
       { token: token }
     end
 
-#     desc 'check auth'
-#     params do
-#       requires :token, type: String
-#     end
-#     get do
-#       student_data, _= JWT.decode params[:token], nil, false
-#       student = Student.find(student_data['student_id'])
-#       student
-#     end
+    desc 'check auth'
+    params do
+      requires :token, type: String
+    end
+    get do
+      student_data, _= JWT.decode params[:token], nil, false
+      student = Student.find(student_data['student_id'])
+      student
+    end
   end
 end
 
