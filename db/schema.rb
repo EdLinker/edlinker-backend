@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_174407) do
+ActiveRecord::Schema.define(version: 2021_03_17_175618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,10 +60,12 @@ ActiveRecord::Schema.define(version: 2021_03_17_174407) do
     t.index ["group_leader_id"], name: "index_groups_on_group_leader_id"
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.string "title"
+  create_table "messages", force: :cascade do |t|
+    t.integer "author_id"
+    t.integer "task_id"
+    t.string "author_type"
     t.text "body"
-    t.datetime "published_at"
+    t.string "link"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -86,6 +88,15 @@ ActiveRecord::Schema.define(version: 2021_03_17_174407) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "auditorium_id"
     t.index ["auditorium_id"], name: "index_subjects_on_auditorium_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "description"
+    t.string "link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0, null: false
   end
 
   create_table "teachers", force: :cascade do |t|
