@@ -61,13 +61,14 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "author_id"
     t.integer "task_id"
-    t.string "author_type"
     t.text "body"
     t.string "link"
+    t.string "author_type"
+    t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_type", "author_id"], name: "index_messages_on_author_type_and_author_id"
   end
 
   create_table "students", force: :cascade do |t|
