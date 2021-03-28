@@ -1,27 +1,29 @@
 class Edlinker::AuthTeacher < Grape::API
+  helpers Edlinker::Helpers::Auth
   namespace :auth_teacher do
     desc 'log in'
-    params do
-      requires :email, type: String
-      requires :password, type: String
-    end
+    params { use :person_params }
     post do
       teacher = Teacher.authenticate(params[:email], params[:password])
-      payload = { teacher_id: teacher }
-      token = JWT.encode payload, nil, 'none'
+      time = Time.now.to_i + 4 * 3600
+      payload = { teacher_id: teacher.id, exp: time }
+      token = JWT.encode payload, ENV['HMAC_SECRET'], 'HS256'
       { token: token }
     end
 
     desc 'check auth'
-    params do
-      requires :token, type: String
-    end
     get do
-      teacher_data, _= JWT.decode params[:token], nil, false
-      teacher = teacher.find(teacher_data['teacher_id'])
-      teacher
+      begin
+        teacher_data, _= JWT.decode headers['Token'], ENV['HMAC_SECRET'], true, { algorithm: 'HS256' }
+        teacher = Teacher.find(teacher_data['teacher_id'])
+        teacher.show_json
+      rescue JWT::ExpiredSignature
+        ['The token has expired.']
+      rescue JWT::DecodeError
+        ['Correct token of teacher must be passed.']
+      rescue JWT::VerificationError
+        ['Signature verification raised']
+      end
     end
   end
 end
-
-
