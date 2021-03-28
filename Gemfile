@@ -6,10 +6,15 @@ ruby '2.7.1'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 #gem 'sqlite3', '~> 1.4'
 
+# AuthTeacher page
+gem 'jwt'
+gem 'sorcery'
+
+# Admin panel
 gem 'activeadmin'
 gem 'devise'
 
-# grape
+# API framework
 gem 'grape'
 gem 'grape-entity'
 gem 'grape-swagger'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_175618) do
+ActiveRecord::Schema.define(version: 2021_03_23_173245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.integer "task_id"
     t.string "author_type"
     t.text "body"
-    t.string "link"
+    t.string "link", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.bigint "group_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "crypted_password"
+    t.string "salt"
+    t.index ["email"], name: "index_students_on_email", unique: true
     t.index ["group_id"], name: "index_students_on_group_id"
   end
 
@@ -93,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
   create_table "tasks", force: :cascade do |t|
     t.integer "student_id"
     t.string "description"
-    t.string "link"
+    t.string "link", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status", default: 0, null: false
@@ -107,6 +110,9 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "crypted_password"
+    t.string "salt"
+    t.index ["email"], name: "index_teachers_on_email", unique: true
   end
 
   add_foreign_key "auditoria", "groups"
