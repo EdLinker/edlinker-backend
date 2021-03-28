@@ -16,7 +16,7 @@ class Edlinker::AuthTeacher < Grape::API
       begin
         teacher_data, _= JWT.decode headers['Token'], ENV['HMAC_SECRET'], true, { algorithm: 'HS256' }
         teacher = Teacher.find(teacher_data['teacher_id'])
-        teacher.show_json
+        present teacher, with: Edlinker::Entities::Teacher
       rescue JWT::ExpiredSignature
         ['The token has expired.']
       rescue JWT::DecodeError
