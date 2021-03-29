@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_175618) do
+ActiveRecord::Schema.define(version: 2021_03_29_165707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "auditoria", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "subject_id"
+    t.bigint "teacher_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_auditoria_on_group_id"
+    t.index ["subject_id"], name: "index_auditoria_on_subject_id"
+    t.index ["teacher_id"], name: "index_auditoria_on_teacher_id"
+  end
+
   create_table "auditoriums", force: :cascade do |t|
     t.bigint "teacher_id"
     t.datetime "created_at", precision: 6, null: false
@@ -61,14 +72,15 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "task_id"
     t.text "body"
-    t.string "link"
+    t.string "link", default: [], array: true
     t.string "author_type"
     t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "task_id"
     t.index ["author_type", "author_id"], name: "index_messages_on_author_type_and_author_id"
+    t.index ["task_id"], name: "index_messages_on_task_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -80,6 +92,10 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.bigint "group_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "crypted_password"
+    t.string "salt"
+    t.string "password"
+    t.index ["email"], name: "index_students_on_email", unique: true
     t.index ["group_id"], name: "index_students_on_group_id"
   end
 
@@ -92,12 +108,13 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.integer "student_id"
     t.string "description"
-    t.string "link"
+    t.string "link", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status", default: 0, null: false
+    t.bigint "student_id"
+    t.index ["student_id"], name: "index_tasks_on_student_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -108,11 +125,20 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "crypted_password"
+    t.string "salt"
+    t.string "password"
+    t.index ["email"], name: "index_teachers_on_email", unique: true
   end
 
+  add_foreign_key "auditoria", "groups"
+  add_foreign_key "auditoria", "subjects"
+  add_foreign_key "auditoria", "teachers"
   add_foreign_key "auditoriums", "teachers"
   add_foreign_key "groups", "auditoriums"
   add_foreign_key "groups", "students", column: "group_leader_id"
+  add_foreign_key "messages", "tasks"
   add_foreign_key "students", "groups"
   add_foreign_key "subjects", "auditoriums"
+  add_foreign_key "tasks", "students"
 end
