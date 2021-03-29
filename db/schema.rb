@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_175618) do
+ActiveRecord::Schema.define(version: 2021_03_29_180633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "task_id"
+    t.integer "status", default: 0
     t.index ["author_type", "author_id"], name: "index_messages_on_author_type_and_author_id"
     t.index ["task_id"], name: "index_messages_on_task_id"
   end
@@ -130,9 +131,6 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
     t.index ["email"], name: "index_teachers_on_email", unique: true
   end
 
-  add_foreign_key "auditoria", "groups"
-  add_foreign_key "auditoria", "subjects"
-  add_foreign_key "auditoria", "teachers"
   add_foreign_key "auditoriums", "teachers"
   add_foreign_key "groups", "auditoriums"
   add_foreign_key "groups", "students", column: "group_leader_id"
