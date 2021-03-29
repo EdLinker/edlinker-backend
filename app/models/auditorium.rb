@@ -1,5 +1,7 @@
 class Auditorium < ApplicationRecord
-  belongs_to :group
+  has_one :subject
+  has_one :group
+  has_many :students, through: :group
+  has_many :tasks, through: :students
   belongs_to :teacher
-  belongs_to :subject
 end
