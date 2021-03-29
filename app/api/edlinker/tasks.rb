@@ -10,12 +10,13 @@ class Edlinker::Tasks < Grape::API
   get ':student_id/tasks' do
     current_student = Student.find(params[:student_id])
     current_student.tasks.includes(:messages).map do |task|
+      assignment = task.messages.first
       {
-          author: task.messages.author,
+          author: assignment.author,
           description: task.description,
           posted_at: task.created_at,
-          body: task.messages.body,
-          link: task.messages.link,
+          body: assignment.body,
+          link: assignment.url,
       }
     end
   end
