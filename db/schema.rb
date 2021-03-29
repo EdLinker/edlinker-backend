@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_175618) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "description"
-    t.string "link", default: [], array: true
+    t.string "url", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status", default: 0, null: false
