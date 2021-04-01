@@ -6,13 +6,17 @@ ruby '2.7.1'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 #gem 'sqlite3', '~> 1.4'
 
-# AuthTeacher page
+# Auth page
 gem 'jwt'
 gem 'sorcery'
 
 # Admin panel
 gem 'activeadmin'
 gem 'devise'
+
+# Add roles in API
+gem 'cancancan'
+gem 'rolify'
 
 # API framework
 gem 'grape'

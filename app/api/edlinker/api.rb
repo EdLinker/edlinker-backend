@@ -7,6 +7,5 @@ class Edlinker::API < Grape::API
   end
 
   mount Edlinker::Groups
-  mount Edlinker::AuthTeacher
-  mount Edlinker::AuthStudent
+  mount Edlinker::Auth
 end

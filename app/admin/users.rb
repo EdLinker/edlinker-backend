@@ -1,3 +1,3 @@
-ActiveAdmin.register Teacher do
+ActiveAdmin.register User do
   permit_params :first_name, :last_name, :patronymic, :phone_number, :email
 end
