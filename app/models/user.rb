@@ -6,5 +6,5 @@ class User < ApplicationRecord
   # has_many :groups, through: :auditoriums
   # has_many :messages, as: :author
   # has_many :tasks
-  #enum role: [:admin_user, :student, :teacher]
+  enum role: [:admin, :student, :teacher]
 end
