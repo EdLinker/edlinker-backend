@@ -2,7 +2,7 @@ class User < ApplicationRecord
   authenticates_with_sorcery!
   rolify
   after_create :assign_default_role
-  
+
   belongs_to :group, optional: true
   has_many :auditoriums
   has_many :groups, through: :auditoriums
@@ -12,6 +12,6 @@ class User < ApplicationRecord
   private
 
   def assign_default_role
-    add_role(:student) if self.roles.blank?
+    add_role(:student) if roles.blank?
   end
 end

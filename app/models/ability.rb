@@ -1,6 +1,5 @@
 class Ability
   include CanCan::Ability
-  after_create :assign_default_role
 
   def initialize(user)
     user ||= User.new
