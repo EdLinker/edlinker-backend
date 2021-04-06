@@ -11,6 +11,8 @@ services:
       - 5431:5432
   backend:
     container_name: backend_app
+    stdin_open: true
+    tty: true
     build:
       context: .
       dockerfile: Dockerfile.dev

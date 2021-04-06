@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :messages, as: :author
   has_many :tasks
 
+  accepts_nested_attributes_for :roles
+
   private
 
   def assign_default_role
