@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_180633) do
+ActiveRecord::Schema.define(version: 2021_03_31_095921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,22 +41,9 @@ ActiveRecord::Schema.define(version: 2021_03_29_180633) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "auditoria", force: :cascade do |t|
-    t.bigint "group_id"
-    t.bigint "subject_id"
-    t.bigint "teacher_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["group_id"], name: "index_auditoria_on_group_id"
-    t.index ["subject_id"], name: "index_auditoria_on_subject_id"
-    t.index ["teacher_id"], name: "index_auditoria_on_teacher_id"
-  end
-
   create_table "auditoriums", force: :cascade do |t|
-    t.bigint "teacher_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["teacher_id"], name: "index_auditoriums_on_teacher_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -65,77 +52,71 @@ ActiveRecord::Schema.define(version: 2021_03_29_180633) do
     t.integer "course_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "group_leader_id"
-    t.bigint "auditorium_id"
-    t.index ["auditorium_id"], name: "index_groups_on_auditorium_id"
-    t.index ["group_leader_id"], name: "index_groups_on_group_leader_id"
   end
 
   create_table "messages", force: :cascade do |t|
+    t.bigint "task_id"
     t.text "body"
-    t.string "link", default: [], array: true
+    t.string "url", default: [], array: true
+    t.integer "status", default: 0
     t.string "author_type"
     t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "task_id"
-    t.integer "status", default: 0
     t.index ["author_type", "author_id"], name: "index_messages_on_author_type_and_author_id"
     t.index ["task_id"], name: "index_messages_on_task_id"
   end
 
-  create_table "students", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "patronymic"
-    t.string "phone_number"
-    t.string "email"
-    t.bigint "group_id"
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "crypted_password"
-    t.string "salt"
-    t.string "password"
-    t.index ["email"], name: "index_students_on_email", unique: true
-    t.index ["group_id"], name: "index_students_on_group_id"
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
   create_table "subjects", force: :cascade do |t|
     t.string "name"
+    t.bigint "auditorium_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "auditorium_id"
     t.index ["auditorium_id"], name: "index_subjects_on_auditorium_id"
   end
 
   create_table "tasks", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "description"
     t.string "url", default: [], array: true
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "status", default: 0, null: false
-    t.bigint "student_id"
-    t.index ["student_id"], name: "index_tasks_on_student_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
-  create_table "teachers", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "patronymic"
     t.string "phone_number"
     t.string "email"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.string "crypted_password"
     t.string "salt"
-    t.index ["email"], name: "index_teachers_on_email", unique: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "auditoriums", "teachers"
-  add_foreign_key "groups", "auditoriums"
-  add_foreign_key "groups", "students", column: "group_leader_id"
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
   add_foreign_key "messages", "tasks"
-  add_foreign_key "students", "groups"
   add_foreign_key "subjects", "auditoriums"
-  add_foreign_key "tasks", "students"
+  add_foreign_key "tasks", "users"
 end

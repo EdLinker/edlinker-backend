@@ -6,13 +6,17 @@ ruby '2.7.1'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 #gem 'sqlite3', '~> 1.4'
 
-# AuthTeacher page
+# Auth page
 gem 'jwt'
 gem 'sorcery'
 
 # Admin panel
 gem 'activeadmin'
 gem 'devise'
+
+# Add roles in API
+gem 'cancancan'
+gem 'rolify'
 
 # API framework
 gem 'grape'
@@ -27,7 +31,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'awesome_print'
-
+gem 'pry-rails'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
