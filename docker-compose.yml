@@ -4,21 +4,34 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - data-postgres:/var/lib/postgresql/data
     env_file:
       - .env
     ports:
       - 5431:5432
   backend:
     container_name: backend_app
-    build: .
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"    
     volumes:
       - .:/app
-      - ./vendor/bundle:/app/vendor/bundle    
+      - bundle:/bundle
     ports:
       - 3000:3000
     depends_on:
       - db
     env_file:
       - .env
+  bundle:
+    image: busybox
+    volumes:
+      - bundle:/bundle
+
+volumes:
+  bundle:
+  data-postgres:
+  
