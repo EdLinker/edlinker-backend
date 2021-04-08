@@ -23,6 +23,9 @@ gem 'grape'
 gem 'grape-entity'
 gem 'grape-swagger'
 
+# Update system rails gem
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 gem 'pg'
