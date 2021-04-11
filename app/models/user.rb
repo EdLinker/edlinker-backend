@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
   rolify
-  after_create :assign_default_role
+  mount_uploader :avatar, AvatarUploader
+
+  validate :must_have_a_role
 
   belongs_to :group, optional: true
   has_many :auditoriums
@@ -12,8 +14,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :roles
 
   private
-
-  def assign_default_role
-    add_role(:student) if roles.blank?
+  def must_have_a_role
+    errors.add(:roles, "user must have a role") unless roles.any?
   end
 end
