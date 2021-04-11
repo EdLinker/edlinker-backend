@@ -3,8 +3,7 @@ class User < ApplicationRecord
   rolify
   mount_uploader :avatar, AvatarUploader
 
-  validates :role, presence: true
-  enum role: %i(admin teacher student)
+  validate :must_have_a_role
 
   belongs_to :group, optional: true
   has_many :auditoriums
@@ -13,4 +12,9 @@ class User < ApplicationRecord
   has_many :tasks
 
   accepts_nested_attributes_for :roles
+
+  private
+  def must_have_a_role
+    errors.add(:roles, "user must have a role") unless roles.any?
+  end
 end

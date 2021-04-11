@@ -28,7 +28,6 @@ gem 'pry-rails'
 
 # Add picture to profile
 gem 'carrierwave', '~> 2.0'
-gem 'mini_magick'
 
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
