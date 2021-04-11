@@ -1,7 +1,10 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
   rolify
-  after_create :assign_default_role
+  mount_uploader :avatar, AvatarUploader
+
+  validates :role, presence: true
+  enum role: %i(admin teacher student)
 
   belongs_to :group, optional: true
   has_many :auditoriums
@@ -10,10 +13,4 @@ class User < ApplicationRecord
   has_many :tasks
 
   accepts_nested_attributes_for :roles
-
-  private
-
-  def assign_default_role
-    add_role(:student) if roles.blank?
-  end
 end
