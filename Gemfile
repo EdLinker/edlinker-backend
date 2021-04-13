@@ -23,8 +23,12 @@ gem 'grape'
 gem 'grape-entity'
 gem 'grape-swagger'
 
-# Update system rails gem
-gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+# Debugger
+gem 'pry-rails'
+
+# Add picture to profile
+gem 'carrierwave', '~> 2.0'
+
 # For frontend
 gem 'rack-cors'
 
@@ -36,7 +40,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'awesome_print'
-gem 'pry-rails'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
