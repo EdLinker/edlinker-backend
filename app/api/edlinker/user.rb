@@ -2,10 +2,9 @@ class Edlinker::User < Grape::API
   namespace :users do
     route_param :user_id do
       get do
-        user = User.find(params[:user_id])
+        user = User.find_by(id: params[:user_id])
+        error!('User not found') unless user
         present user, with: Edlinker::Entities::User
-      rescue ActiveRecord::RecordNotFound
-        ['User_id is incorrect. Please, pass correct user_id']
       end
     end
   end
