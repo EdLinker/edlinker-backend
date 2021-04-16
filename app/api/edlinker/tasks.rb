@@ -15,7 +15,7 @@ class Edlinker::Tasks < Grape::API
         {
             description: task.description,
             status: task.status,
-            url: task.url,
+            urls: task.url,
             created_at: task.created_at
         }
       end
