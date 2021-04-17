@@ -11,14 +11,12 @@ class Edlinker::Tasks < Grape::API
   namespace :users do
     get ':user_id/tasks' do
       current_user = User.find(params[:user_id])
-      current_user.tasks.includes(:messages).map do |task|
-        assignment = task.messages.first
+      current_user.tasks.map do |task|
         {
-            author: assignment.author,
             description: task.description,
-            posted_at: task.created_at,
-            body: assignment.body,
-            link: assignment.url,
+            status: task.status,
+            urls: task.url,
+            created_at: task.created_at
         }
       end
     end
