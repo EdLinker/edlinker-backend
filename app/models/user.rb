@@ -3,7 +3,8 @@ class User < ApplicationRecord
   rolify
   mount_uploader :avatar, AvatarUploader
 
-  validate :must_have_a_role
+  validate  :must_have_a_role
+  validates :email, presence: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
 
   belongs_to :group, optional: true
   has_many :auditoriums
