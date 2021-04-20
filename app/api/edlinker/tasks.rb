@@ -10,9 +10,11 @@ class Edlinker::Tasks < Grape::API
             avatar: current_user.avatar.url,
             title: task.title,
             description: task.description,
-            author: { user_id: current_user.id,
-                      first_name: current_user.first_name,
-                      last_name: current_user.last_name },
+            author: {
+              user_id: current_user.id,
+              first_name: current_user.first_name,
+              last_name: current_user.last_name
+            },
             subject_name: task.subject&.name,
             status: task.status,
             urls: task.url,
