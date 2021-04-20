@@ -39,4 +39,6 @@ jobs:
       
       - name: Migarte DB
         run: heroku run rake db:migrate -a ${{ secrets.HEROKU_APP_NAME }}
-        
+      
+      - name: Assets compile
+        run: heroku run rake assets:precompile -a ${{ secrets.HEROKU_APP_NAME }}        
