@@ -1,6 +1,6 @@
 class Auditorium < ApplicationRecord
   has_one :subject
-  belongs_to :group
+  has_one :group
   belongs_to :user
   has_many :tasks, through: :users
 end
