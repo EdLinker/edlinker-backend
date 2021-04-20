@@ -10,4 +10,5 @@ class Edlinker::API < Grape::API
   mount Edlinker::Auth
   mount Edlinker::Tasks
   mount Edlinker::User
+  mount Edlinker::Auditoriums
 end

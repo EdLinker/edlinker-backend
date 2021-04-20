@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_193917) do
+ActiveRecord::Schema.define(version: 2021_04_20_183211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2021_04_19_193917) do
   create_table "auditoriums", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "group_id"
+    t.bigint "user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -53,7 +55,7 @@ ActiveRecord::Schema.define(version: 2021_04_19_193917) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "auditorium_id"
-    t.string "group_leader"
+    t.bigint "group_leader_id"
     t.index ["auditorium_id"], name: "index_groups_on_auditorium_id"
   end
 
@@ -96,6 +98,7 @@ ActiveRecord::Schema.define(version: 2021_04_19_193917) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "url", default: {}
     t.string "title"
+    t.bigint "subject_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
