@@ -12,11 +12,9 @@ module Edlinker
     config.load_defaults 6.0
     config.autoloader = :classic
 
-    config.assets.enabled = true
-    config.assets.initialize_on_precompile = false
-    config.assets.precompile += %w[active_admin.css active_admin/print.css active_admin.js]
-    config.log_level = :info
-    config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+    # config.assets.enabled = true
+    # config.assets.initialize_on_precompile = false
+    # config.assets.precompile += %w[active_admin.css active_admin/print.css active_admin.js]
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
