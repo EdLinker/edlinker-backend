@@ -1,3 +1,3 @@
 ActiveAdmin.register Auditorium do
-  permit_params :teacher_id, :subject, :group
+  permit_params :name, :group_id
 end
