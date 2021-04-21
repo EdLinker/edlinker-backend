@@ -6,6 +6,7 @@ class Edlinker::Tasks < Grape::API
 
       current_user.tasks.map do |task|
         {
+            task_id: task.id,
             auditorium_id: task.subject&.auditorium&.id,
             avatar: current_user.avatar.url,
             title: task.title,
