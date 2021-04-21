@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   belongs_to :group, optional: true
   has_many :auditoriums
-  has_many :groups, through: :auditoriums
+  #has_many :groups, through: :auditoriums
   has_many :messages, as: :author
   has_many :tasks
 
