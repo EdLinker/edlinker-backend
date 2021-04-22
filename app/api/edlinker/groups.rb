@@ -10,7 +10,7 @@ class Edlinker::Groups < Grape::API
             group_id: group.id,
             group_name: group.name,
             student_count: group.users.count,
-            subject: group.subject.name,
+            subject: group.subject&.name,
             course_number: group.course_number,
             group_leader: group.group_leader_id
         }
