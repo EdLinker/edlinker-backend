@@ -1,4 +1,5 @@
 class Edlinker::Tasks < Grape::API
+  helpers Edlinker::Helpers::Task
   namespace :users do
     get ':user_id/tasks' do
       current_user = User.find_by(id: params[:user_id])
@@ -23,5 +24,18 @@ class Edlinker::Tasks < Grape::API
         }
       end
     end
+
+    desc 'create task'
+    params { use :task_params }
+    post ':user_id/tasks' do
+      current_user = User.find_by(id: params[:user_id])
+      error!('User not found') unless current_user
+      current_user.tasks.create(params)
+    end
   end
+
+  # namespace :groups do
+  #   get ':group_id/tasks'
+  #
+  # end
 end
