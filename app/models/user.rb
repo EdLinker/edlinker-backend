@@ -6,9 +6,8 @@ class User < ApplicationRecord
   validate  :must_have_a_role
   validates :email, presence: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
 
-  belongs_to :group, optional: true
   has_many :auditoriums
-  #has_many :groups, through: :auditoriums
+  has_many :groups, through: :auditoriums
   has_many :messages, as: :author
   has_many :tasks
 
