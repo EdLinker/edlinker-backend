@@ -5,7 +5,7 @@ class Edlinker::Auth < Grape::API
     params { use :person_params }
     post do
       user = User.authenticate(params[:email], params[:password])
-      time = Time.now.to_i + 4 * 3600
+      time = Time.now.to_i + 168 * 3600
       payload = { user_id: user.id, exp: time }
       token = JWT.encode payload, ENV['HMAC_SECRET'], 'HS256'
       { token: token }

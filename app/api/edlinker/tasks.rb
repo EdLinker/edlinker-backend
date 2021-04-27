@@ -11,6 +11,7 @@ class Edlinker::Tasks < Grape::API
             auditorium_id: task.subject&.auditorium&.id,
             avatar: current_user.avatar.url,
             title: task.title,
+            number: task.number,
             description: task.description,
             author: {
               user_id: current_user.id,
@@ -25,7 +26,7 @@ class Edlinker::Tasks < Grape::API
       end
     end
 
-    desc 'create task'
+    desc 'create task for user'
     params { use :task_params }
     post ':user_id/tasks' do
       current_user = User.find_by(id: params[:user_id])
@@ -33,9 +34,4 @@ class Edlinker::Tasks < Grape::API
       current_user.tasks.create(params)
     end
   end
-
-  # namespace :groups do
-  #   get ':group_id/tasks'
-  #
-  # end
 end

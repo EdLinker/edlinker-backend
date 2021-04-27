@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
   has_many   :messages
-  belongs_to :user
+  has_one    :user
+  belongs_to :auditorium
   belongs_to :subject
 
   validates  :title, presence: true
