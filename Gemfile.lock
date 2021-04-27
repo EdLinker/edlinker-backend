@@ -350,6 +350,7 @@ DEPENDENCIES
   grape-swagger
   jbuilder (~> 2.7)
   jwt
+  kaminari
   listen (~> 3.2)
   pg
   pry-rails
