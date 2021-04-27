@@ -29,6 +29,9 @@ gem 'pry-rails'
 # Add picture to profile
 gem 'carrierwave', '~> 2.0'
 
+# Pagination
+gem 'kaminari'
+
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 gem 'pg'

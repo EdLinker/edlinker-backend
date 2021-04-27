@@ -5,7 +5,7 @@ class Edlinker::Tasks < Grape::API
       current_user = User.find_by(id: params[:user_id])
       error!('User not found') unless current_user
 
-      current_user.tasks.map do |task|
+      current_user.tasks.page(params[:page]).map do |task|
         {
             task_id: task.id,
             auditorium_id: task.subject&.auditorium&.id,
