@@ -26,7 +26,10 @@ class Edlinker::Auditoriums < Grape::API
     post ':auditorium_id/tasks' do
       current_auditorium = Auditorium.find_by(id: params[:auditorium_id])
       error!('Auditorium not found') unless current_auditorium
-      current_auditorium.tasks.create(params)
+      current_user = User.find_by(id: params[:task][:user_id])
+      error!('User not found') unless current_user
+      error!('Current user is not teacher') unless current_user.has_role?(:teacher)
+      current_auditorium.tasks.create(params[:task])
     end
 
     get ':auditorium_id/tasks' do
