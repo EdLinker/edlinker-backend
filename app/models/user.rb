@@ -1,7 +1,10 @@
 class User < ApplicationRecord
+  devise :database_authenticatable, :registerable, :recoverable,
+         :rememberable, :confirmable, :validatable
   authenticates_with_sorcery!
   rolify
   mount_uploader :avatar, AvatarUploader
+  paginates_per 10
 
   validate  :must_have_a_role
   validates :email, presence: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }

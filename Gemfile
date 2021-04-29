@@ -34,6 +34,9 @@ gem 'carrierwave', '~> 2.0'
 # For frontend
 gem 'rack-cors'
 
+# Pagination
+gem 'kaminari'
+
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 gem 'pg'

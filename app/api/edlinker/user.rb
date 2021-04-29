@@ -7,5 +7,13 @@ class Edlinker::User < Grape::API
         present user, with: Edlinker::Entities::User
       end
     end
+
+    params do
+      requires :page, type: Integer
+    end
+
+    get do
+      @users = User.order(:last_name).page(params[:page])
+    end
   end
 end
