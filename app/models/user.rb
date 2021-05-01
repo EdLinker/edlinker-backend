@@ -5,7 +5,8 @@ class User < ApplicationRecord
   paginates_per 10
 
   validate  :must_have_a_role
-  validates :email, presence: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
+  validates :phone_number, presence: true, uniqueness: true, format: { with: /\d[0-9]\)*\z/, message: "Only positive number without spaces are allowed" }
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/, message: "email invalid" }
 
   has_many :auditoriums
   has_many :groups, through: :auditoriums

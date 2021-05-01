@@ -1,5 +1,6 @@
 class Edlinker::Tasks < Grape::API
   helpers Edlinker::Helpers::Task
+  helpers Edlinker::Helpers::User
   namespace :users do
     get ':user_id/tasks' do
       current_user = User.find_by(id: params[:user_id])
@@ -33,5 +34,16 @@ class Edlinker::Tasks < Grape::API
       error!('User not found') unless current_user
       current_user.tasks.create(params)
     end
+
+    desc 'update task status'
+    put ':user_id/tasks/:task_id' do
+      get_student
+      task = @current_user.tasks.find_by(id: params[:task_id])
+      error!('task not found') unless task
+      task.change_status(params[:status].to_i)
+      task
+    end
   end
 end
+
+
