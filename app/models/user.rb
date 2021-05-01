@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :recoverable,
-         :rememberable, :confirmable, :validatable
   authenticates_with_sorcery!
   rolify
   mount_uploader :avatar, AvatarUploader
