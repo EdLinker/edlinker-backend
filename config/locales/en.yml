@@ -37,3 +37,7 @@ en:
         /start - Greeting.
     start:
       content: Hi there!
+    phone_number:
+      prompt: 'Please share your phone number to control your account using this bot'
+      saved: "Thank you! Your number is saved"
+
