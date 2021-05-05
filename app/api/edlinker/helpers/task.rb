@@ -8,6 +8,6 @@ module Edlinker::Helpers::Task
       optional :status, type: Integer
       optional :url, type: Hash
     end
-    requires :page, type: Integer
+    optional :page, type: Integer
   end
 end
