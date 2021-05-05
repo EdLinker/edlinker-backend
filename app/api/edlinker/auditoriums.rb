@@ -1,5 +1,6 @@
 class Edlinker::Auditoriums < Grape::API
   helpers Edlinker::Helpers::Task
+  helpers Edlinker::Helpers::User
   namespace :users do
     get ':user_id/auditoriums' do
       current_user = User.find_by(id: params[:user_id])
@@ -30,18 +31,14 @@ class Edlinker::Auditoriums < Grape::API
     post ':auditorium_id/tasks' do
       current_auditorium = Auditorium.find_by(id: params[:auditorium_id])
       error!('Auditorium not found') unless current_auditorium
-      current_user = User.find_by(id: params[:task][:user_id])
-      error!('User not found') unless current_user
-      error!('Current user is not teacher') unless current_user.has_role?(:teacher)
+      current_teacher
       current_auditorium.tasks.create(params[:task])
     end
 
     get ':auditorium_id/tasks' do
       current_auditorium = Auditorium.find_by(id: params[:auditorium_id])
       error!('Auditorium not found') unless current_auditorium
-      current_user = User.find_by(id: params[:user_id])
-      error!('User not found') unless current_user
-      error!('Current user is not teacher') unless current_user.has_role?(:teacher)
+      current_teacher
 
       current_auditorium.tasks.map do |task|
         {

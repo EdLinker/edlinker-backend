@@ -10,4 +10,8 @@ class Task < ApplicationRecord
 
   STATUSES = %i[todo in_progress done].freeze
   enum status: STATUSES
+
+  def change_status(status)
+    update(status: status)
+  end
 end
