@@ -12,7 +12,6 @@ class Edlinker::Auditoriums < Grape::API
             auditorium_id: auditorium.id,
             name: auditorium.name,
             group_id: group&.id,
-            subject_id: group&.subject&.id,
             subject_name: group&.subject&.name,
             course_number: group&.course_number,
             student_count: group&.users&.count,
@@ -47,7 +46,6 @@ class Edlinker::Auditoriums < Grape::API
           title: task.title,
           number: task.number,
           description: task.description,
-          subject_id: task.subject&.id,
           subject_name: task.subject&.name,
           urls: task.url,
           created_at: task.created_at
