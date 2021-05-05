@@ -37,7 +37,7 @@ class Edlinker::Tasks < Grape::API
 
     desc 'update task status'
     put ':user_id/tasks/:task_id' do
-      get_student
+      current_student
       task = @current_user.tasks.find_by(id: params[:task_id])
       error!('task not found') unless task
       task.change_status(params[:status].to_i)

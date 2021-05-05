@@ -5,7 +5,7 @@ class Edlinker::Messages < Grape::API
     desc 'create message for student'
     params { use :message_params }
     post ':user_id/messages' do
-      get_student
+      current_student
       @current_user.messages.create(params[:message])
     end
   end
