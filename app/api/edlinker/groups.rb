@@ -3,6 +3,7 @@ class Edlinker::Groups < Grape::API
   
   get 'groups' do
     current_user = authorized_user
+    validate_teacher
     current_user.groups.includes(:subject).map do |group|
       {
           auditorium_id: group.auditorium.id,

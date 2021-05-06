@@ -29,6 +29,7 @@ class Edlinker::Tasks < Grape::API
   params { use :task_params }
   post 'tasks' do
     current_user = authorized_user
+    validate_teacher
     current_user.tasks.create!(params[:task])
   end
 
