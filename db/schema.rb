@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_190940) do
+ActiveRecord::Schema.define(version: 2021_05_01_141821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 2021_04_29_190940) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "auditorium_id"
     t.bigint "group_leader_id"
+    t.string "group_leader_name"
+    t.string "group_leader_surname"
     t.index ["auditorium_id"], name: "index_groups_on_auditorium_id"
   end
 
@@ -100,6 +102,8 @@ ActiveRecord::Schema.define(version: 2021_04_29_190940) do
     t.jsonb "url", default: {}
     t.string "title"
     t.bigint "subject_id"
+    t.bigint "auditorium_id"
+    t.integer "number"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
