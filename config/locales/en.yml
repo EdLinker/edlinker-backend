@@ -30,4 +30,14 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  telegram_webhooks:
+    help:
+      content: |
+        Available cmds:
+        /start - Greeting.
+    start:
+      content: Hi there!
+    phone_number:
+      prompt: 'Please share your phone number to control your account using this bot'
+      saved: "Thank you! Your number is saved"
+

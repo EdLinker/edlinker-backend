@@ -63,4 +63,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.webpacker.check_yarn_integrity = false
+
+  # Use memory store for bot sessions.
+  config.telegram_updates_controller.session_store = :memory_store
 end

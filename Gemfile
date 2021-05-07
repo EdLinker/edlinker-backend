@@ -32,6 +32,9 @@ gem 'carrierwave', '~> 2.0'
 # Pagination
 gem 'kaminari'
 
+#Telegram bot
+gem 'telegram-bot'
+
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 gem 'pg'
