@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :messages, as: :author
   has_many :tasks
 
+  scope :telegram_users, -> { where.not(telegram_data: nil) }
+
   accepts_nested_attributes_for :roles
 
   private

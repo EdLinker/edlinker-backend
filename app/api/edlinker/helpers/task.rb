@@ -6,7 +6,7 @@ module Edlinker::Helpers::Task
       requires :subject_id, type: Integer
       optional :description, type: String
       optional :status, type: Integer
-      optional :url, type: Hash
+      optional :url, type: Array[Hash]
     end
     optional :page, type: Integer
   end

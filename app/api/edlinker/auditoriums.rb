@@ -30,7 +30,10 @@ class Edlinker::Auditoriums < Grape::API
       validate_teacher
       current_auditorium = Auditorium.find_by(id: params[:auditorium_id])
       error!('Auditorium not found') unless current_auditorium
-      current_auditorium.tasks.create(params[:task])
+      current_auditorium.group.users.uniq.each do|user|
+        user.tasks.create(params[:task].merge(auditorium_id: current_auditorium.id))
+      end
+      'task created successfully'
     end
 
     get ':auditorium_id/tasks' do

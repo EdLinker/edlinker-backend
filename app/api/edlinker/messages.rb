@@ -14,21 +14,15 @@ class Edlinker::Messages < Grape::API
 
   namespace :groups do
     desc 'create message for group'
-      params { use :message_params }
-      post ':group_id/messages' do
+    params { use :message_params }
+    post ':group_id/messages' do
       validate_teacher
-      student_ids = []
       current_group = Group.find_by(id: params[:group_id])
       error!('group not found') unless current_group
-      current_group.users.each do |student|
-        if student.telegram_data.present?
-          student.messages.create(params[:message])
-        else
-          student_ids << student.id
-        end
+      current_group.users.telegram_users.each do |student|
+        student.messages.create(params[:message])
       end
-      return "these students have no telegram: #{student_ids}" if student_ids.empty?
-      'success'
+      'message sent to the group'
     end
   end
 end
