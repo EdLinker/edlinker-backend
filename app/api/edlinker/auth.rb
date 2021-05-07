@@ -16,7 +16,7 @@ class Edlinker::Auth < Grape::API
     get do
       begin
         user_data, _= JWT.decode headers['Token'], ENV['HMAC_SECRET'], true, { algorithm: 'HS256' }
-        user = User.find(user_data['user_id'])
+        user = User.find_by(id: user_data['user_id'])
         present user, with: Edlinker::Entities::User
       rescue JWT::ExpiredSignature
         ['The token has expired.']

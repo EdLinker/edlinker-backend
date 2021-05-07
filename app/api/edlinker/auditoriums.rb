@@ -4,6 +4,7 @@ class Edlinker::Auditoriums < Grape::API
 
   get 'auditoriums' do
     current_user = authorized_user
+    error!('User not found') unless current_user
     current_user.auditoriums.map do |auditorium|
       group = auditorium.group
       {

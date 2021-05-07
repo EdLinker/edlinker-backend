@@ -3,7 +3,7 @@ module Edlinker::Helpers::User
 
   def authorized_user
     user_data, _= JWT.decode headers['Token'], ENV['HMAC_SECRET'], true, { algorithm: 'HS256' }
-    user = User.find(user_data['user_id'])
+    user = User.find_by(id: user_data['user_id'])
     error!('User not found') unless user
     user
   end
