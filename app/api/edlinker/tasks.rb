@@ -4,6 +4,7 @@ class Edlinker::Tasks < Grape::API
 
   get 'tasks' do
     current_user = authorized_user
+    error!('User not found') unless current_user
     current_user.tasks.page(params[:page]).map do |task|
       {
           task_id: task.id,
