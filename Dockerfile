@@ -15,7 +15,7 @@ COPY . /app
 ENV BUNDLE_PATH /bundle
 ENV PATH /app/bin:$PATH
 
-RUN gem install bundler -v 2.1.4 --no-document
+RUN gem install bundler -v 2.2.16 --no-document
 RUN bundle install
 
 EXPOSE 3000
