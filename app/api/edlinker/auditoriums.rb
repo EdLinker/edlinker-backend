@@ -12,6 +12,7 @@ class Edlinker::Auditoriums < Grape::API
           name: auditorium.name,
           group_id: group&.id,
           subject_name: group&.subject&.name,
+          subject_id: group&.subject&.id,
           course_number: group&.course_number,
           student_count: group&.users&.count,
           group_leader: {
