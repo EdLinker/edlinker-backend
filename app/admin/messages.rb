@@ -1,3 +1,3 @@
 ActiveAdmin.register Message do
-  permit_params :task_id, :body, :link, :author_type, :author_id
+  permit_params :task_id, :body, :url, :status, :author_type, :author_id
 end
