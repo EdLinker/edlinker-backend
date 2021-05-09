@@ -37,17 +37,24 @@ class Edlinker::Tasks < Grape::API
   desc 'update task status'
   params do
     requires :status, type: Integer
-    requires :student_id, type: Integer
   end
 
   put 'tasks/:task_id' do
-    current_student = User.find_by(id: params[:student_id])
+    current_student = authorized_user
     error!('User not found') unless current_student
     task = current_student.tasks.find_by(id: params[:task_id])
     error!('task not found') unless task
     task.change_status(params[:status].to_i)
     task
   end
+
+#   get 'users_task' do
+#     validate_teacher
+#     current_user = authorized_user
+#     error!('User not found') unless current_user
+#     users_with_task = User.joins(:tasks).where('tasks.number = ?', params[:number]).pluck('users.first_name', 'users.last_name', 'tasks.status')
+#     users_with_task.map
+#   end
 end
 
 

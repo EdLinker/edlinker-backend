@@ -4,6 +4,8 @@ module Edlinker::Helpers::Task
     requires :task, type: Hash do
       requires :title, type: String
       requires :subject_id, type: Integer
+      requires :number, type: Integer
+      optional :auditorium_id, type: Integer
       optional :description, type: String
       optional :status, type: Integer
       optional :url, type: Array[Hash]
