@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(version: 2021_05_09_192619) do
     t.jsonb "url", default: {}
     t.string "title"
     t.bigint "subject_id"
+    t.bigint "auditorium_id"
+    t.integer "number"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
