@@ -8,13 +8,13 @@ module Edlinker::Helpers::User
 
   def validate_student
     current_user = authorized_user
-    error!('User not found') unless current_user
+    error!('student not found') unless current_user
     error!('Current user is not student') unless current_user.has_role?(:student)
   end
 
   def validate_teacher
     current_user = authorized_user
-    error!('User not found') unless current_user
+    error!('teacher not found') unless current_user
     error!('Current user is not teacher') unless current_user.has_role?(:teacher)
   end
 end
