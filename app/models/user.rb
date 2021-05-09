@@ -17,6 +17,10 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :roles
 
+  def display_name
+    "#{first_name} #{last_name}"
+  end
+
   private
   def must_have_a_role
     errors.add(:roles, "user must have a role") unless roles.any?
