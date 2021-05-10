@@ -21,8 +21,10 @@ class Edlinker::Messages < Grape::API
       teacher = authorized_user
       current_auditorium = Auditorium.find_by(id: params[:auditorium_id])
       error!('auditorium not found') unless current_auditorium
-      current_auditorium.users.telegram_users.each do |student|
-        student.messages.create(params[:message].merge(author_id: teacher.id, author_type: User.name))
+      current_auditorium.groups.each do |group|
+        group.users.telegram_users.each do |student|
+          student.messages.create(params[:message].merge(author_id: teacher.id, author_type: User.name))
+        end
       end
       'message sent to the auditorium'
     end
