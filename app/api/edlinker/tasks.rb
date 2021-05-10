@@ -14,9 +14,9 @@ class Edlinker::Tasks < Grape::API
           number: task.number,
           description: task.description,
           author: {
-            user_id: current_user.id,
-            first_name: current_user.first_name,
-            last_name: current_user.last_name
+            id: current_user.id,
+            name: current_user.first_name,
+            surname: current_user.last_name
           },
           subject_name: task.subject&.name,
           status: task.status,
@@ -29,16 +29,16 @@ class Edlinker::Tasks < Grape::API
   desc 'create task for user'
   params { use :task_params }
   post 'tasks' do
-    current_user = authorized_user
     validate_teacher
-    current_user.tasks.create!(params[:task])
+    teacher = authorized_user
+    student = User.find_by(id: params[:student_id])
+    student.tasks.create!(params[:task].merge(author_id: teacher.id))
   end
 
   desc 'update task status'
   params do
     requires :status, type: Integer
   end
-
   put 'tasks/:task_id' do
     current_student = authorized_user
     error!('User not found') unless current_student
@@ -48,13 +48,18 @@ class Edlinker::Tasks < Grape::API
     task
   end
 
-#   get 'users_task' do
-#     validate_teacher
-#     current_user = authorized_user
-#     error!('User not found') unless current_user
-#     users_with_task = User.joins(:tasks).where('tasks.number = ?', params[:number]).pluck('users.first_name', 'users.last_name', 'tasks.status')
-#     users_with_task.map
-#   end
+  params do
+    requires :number, type: Integer
+  end
+  get 'users_task' do
+    validate_teacher
+    current_user = authorized_user
+    error!('User not found') unless current_user
+    users_with_task = User.joins(:tasks).includes(:group).where('tasks.number = ?', params[:number]).pluck('users.id', 'users.first_name', 'users.last_name', 'tasks.status', 'groups.name')
+    users_with_task.map do |id, first_name, last_name, status, group_name|
+      { id: id, first_name: first_name, last_name: last_name, status: status, group_name: group_name }
+    end
+  end
 end
 
 

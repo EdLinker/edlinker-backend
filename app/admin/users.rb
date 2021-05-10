@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :patronymic, :phone_number, :email, :password, role_ids: [], avatars: []
+  permit_params :first_name, :last_name, :patronymic, :group_id, :phone_number, :email, :password, role_ids: [], avatars: []
 
   index do
     selectable_column
@@ -10,6 +10,7 @@ ActiveAdmin.register User do
     column :phone_number
     column :email
     column :roles
+    column :group_id
     column :created_at
     actions
   end
@@ -24,6 +25,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :password
       f.input :roles, as: :check_boxes, collection: Role.all
+      f.input :group_id, as: :select, collection: Group.all
     end
     f.actions
   end

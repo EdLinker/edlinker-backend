@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_09_210748) do
+ActiveRecord::Schema.define(version: 2021_05_10_221618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_05_09_210748) do
     t.bigint "group_id"
     t.bigint "user_id"
     t.string "name"
+    t.bigint "subject_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -59,7 +60,6 @@ ActiveRecord::Schema.define(version: 2021_05_09_210748) do
     t.bigint "group_leader_id"
     t.string "group_leader_name"
     t.string "group_leader_surname"
-    t.bigint "user_id"
     t.index ["auditorium_id"], name: "index_groups_on_auditorium_id"
   end
 
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 2021_05_09_210748) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "avatar"
     t.jsonb "telegram_data"
+    t.bigint "group_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

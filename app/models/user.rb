@@ -8,9 +8,9 @@ class User < ApplicationRecord
   validates :phone_number, presence: true, uniqueness: true, format: { with: /\d[0-9]\)*\z/, message: "Only positive number without spaces are allowed" }
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/, message: "email invalid" }
 
-  has_many :groups
-  has_many :auditoriums, through: :groups
-  # has_many :messages, as: :author
+  has_one  :group
+  has_one  :auditorium
+  has_many :messages, as: :author
   has_many :messages
   has_many :tasks
 
@@ -19,7 +19,6 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :roles
 
   def display_name
-    p messages
     "#{first_name} #{last_name}"
   end
 
