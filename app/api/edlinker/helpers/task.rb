@@ -10,6 +10,7 @@ module Edlinker::Helpers::Task
       optional :status, type: Integer
       optional :url, type: Array[Hash]
     end
+    optional :student_id, type: Integer
     optional :page, type: Integer
   end
 end
