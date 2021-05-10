@@ -8,8 +8,8 @@ class User < ApplicationRecord
   validates :phone_number, presence: true, uniqueness: true, format: { with: /\d[0-9]\)*\z/, message: "Only positive number without spaces are allowed" }
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/, message: "email invalid" }
 
-  belongs_to :group
-  has_one   :auditorium
+  has_one  :group
+  has_one  :auditorium
   has_many :messages, as: :author
   has_many :messages
   has_many :tasks

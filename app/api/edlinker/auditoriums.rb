@@ -43,6 +43,7 @@ class Edlinker::Auditoriums < Grape::API
 
     get ':auditorium_id/tasks' do
       validate_teacher
+      teacher = authorized_user
       current_auditorium = Auditorium.find_by(id: params[:auditorium_id])
       error!('Auditorium not found') unless current_auditorium
 
@@ -54,8 +55,12 @@ class Edlinker::Auditoriums < Grape::API
           description: task.description,
           subject_name: task.subject&.name,
           urls: task.url,
-          created_at: task.created_at
-        }
+          created_at: task.created_at,
+          author: {
+            first_name: teacher.first_name,
+            last_name: teacher.last_name
+          }
+         }
       end
     end
   end
