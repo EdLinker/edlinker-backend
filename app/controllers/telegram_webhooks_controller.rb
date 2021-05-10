@@ -1,9 +1,10 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
+  before_action :current_user
   Telegram.bots_config = {
     default: ENV['TELEGRAM_TOKEN']
   }
-
+  
   def start!(*)
     phone_number
   end
@@ -13,7 +14,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def main_inline_menu!
-    @current_user = User.where("telegram_data->>'user_id' = ?", from['id'].to_s).first
     subjects = []
     subject_buttons = []
 
@@ -22,12 +22,29 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
 
     subjects.each do |subject|
-      subject_buttons << {text: subject, callback_data: subject}
+      subject_buttons << {text: subject, callback_data: 'subject'}
     end
 
     respond_with :message, text: 'Choose your subject', reply_markup: {
       inline_keyboard: [
         subject_buttons
+      ]
+    }
+  end
+
+  def choose_task
+    tasks = []
+    task_buttons = []
+    @current_user.tasks.each_with_index do |task, index|
+      tasks << task.title
+      task_buttons << {text: tasks[index], callback_data: 'task'}
+    end
+    respond_with :message, text: 'Choose your task', reply_markup: {
+      inline_keyboard: [
+        task_buttons,
+        [
+          { text: 'Back', callback_data: 'back_to_subjects'}
+        ]
       ]
     }
   end
@@ -46,7 +63,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def callback_query(data)
-    @current_user = User.where("telegram_data->>'user_id' = ?", from['id'].to_s).first
+    #p @current_user
     task = @current_user.tasks[-1]
     case data
     when 'todo'
@@ -61,7 +78,12 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       task.update_column(:status, 2)
       p task
       answer_callback_query 'Status changed to Done'
+    when 'subject'
+      edit_message :message, {}
+    when 'back_to_subjects'
+      edit_message main_inline_menu!
     end
+
   end
 
   def phone_number
@@ -79,6 +101,10 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       update_tg_data
       respond_with :message, text: t('telegram_webhooks.phone_number.saved')
     end
+  end
+
+  def current_user
+    @current_user = User.where("telegram_data->>'user_id' = ?", from['id'].to_s).first
   end
 
   def update_tg_data
