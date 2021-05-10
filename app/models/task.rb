@@ -7,6 +7,7 @@ class Task < ApplicationRecord
   belongs_to :subject
 
   validates  :title, presence: true
+  validates  :number, presence: true, uniqueness: true
 
   STATUSES = %i[todo in_progress done].freeze
   enum status: STATUSES
