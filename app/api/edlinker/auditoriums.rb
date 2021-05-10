@@ -57,8 +57,8 @@ class Edlinker::Auditoriums < Grape::API
           urls: task.url,
           created_at: task.created_at,
           author: {
-            first_name: teacher.first_name,
-            last_name: teacher.last_name
+            name: teacher.first_name,
+            surname: teacher.last_name
           }
          }
       end
