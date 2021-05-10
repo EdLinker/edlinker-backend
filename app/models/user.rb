@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   has_many :groups
   has_many :auditoriums, through: :groups
-  has_many :messages, as: :author
+  # has_many :messages, as: :author
   has_many :messages
   has_many :tasks
 
@@ -19,6 +19,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :roles
 
   def display_name
+    p messages
     "#{first_name} #{last_name}"
   end
 
