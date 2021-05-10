@@ -32,7 +32,7 @@ class Edlinker::Tasks < Grape::API
     validate_teacher
     teacher = authorized_user
     student = User.find_by(id: params[:student_id])
-    student.tasks.create!(params[:task].merge(author_id: teacher.id))
+    student.tasks.create(params[:task].merge(author_id: teacher.id))
   end
 
   desc 'update task status'
