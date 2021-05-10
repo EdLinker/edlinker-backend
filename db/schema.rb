@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_09_192619) do
+ActiveRecord::Schema.define(version: 2021_05_09_210748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,9 @@ ActiveRecord::Schema.define(version: 2021_05_09_192619) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "auditorium_id"
     t.bigint "group_leader_id"
+    t.string "group_leader_name"
+    t.string "group_leader_surname"
+    t.bigint "user_id"
     t.index ["auditorium_id"], name: "index_groups_on_auditorium_id"
   end
 
@@ -65,11 +68,12 @@ ActiveRecord::Schema.define(version: 2021_05_09_192619) do
     t.text "body"
     t.string "url", default: [], array: true
     t.integer "status", default: 0
-    t.string "author_type"
-    t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_type", "author_id"], name: "index_messages_on_author_type_and_author_id"
+    t.bigint "user_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["task_id"], name: "index_messages_on_task_id"
   end
 
@@ -102,6 +106,7 @@ ActiveRecord::Schema.define(version: 2021_05_09_192619) do
     t.bigint "subject_id"
     t.bigint "auditorium_id"
     t.integer "number"
+    t.bigint "author_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 

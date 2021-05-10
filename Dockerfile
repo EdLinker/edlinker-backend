@@ -1,6 +1,9 @@
 FROM ruby:2.7.1
 
-RUN apt-get update && apt-get install -y curl build-essential libpq-dev
+RUN apt-get update && apt-get install -y curl build-essential libpq-dev && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y nodejs yarn
 
 WORKDIR /app
 
@@ -12,7 +15,7 @@ COPY . /app
 ENV BUNDLE_PATH /bundle
 ENV PATH /app/bin:$PATH
 
-RUN gem install bundler -v 2.1.4 --no-document
+RUN gem install bundler -v 2.2.16 --no-document
 RUN bundle install
 
 EXPOSE 3000

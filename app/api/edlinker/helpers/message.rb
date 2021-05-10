@@ -7,5 +7,6 @@ module Edlinker::Helpers::Message
       optional :status, type: Integer
       optional :url, type: Array
     end
+    optional :student_id, type: Integer
   end
 end
