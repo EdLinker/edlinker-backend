@@ -1,5 +1,5 @@
 class Subject < ApplicationRecord
-  has_one   :auditorium
+  belongs_to  :auditorium
   has_many  :tasks
   validates :name, presence: true
 end
