@@ -14,12 +14,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def main_inline_menu!
-    subjects = []
-    subject_buttons = []
-
-    @current_user.tasks.each do |task|
-      subjects << task.subject.name
-    end
+    subjects
 
     subjects.each do |subject|
       subject_buttons << {text: subject, callback_data: 'subject'}
@@ -32,18 +27,39 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     }
   end
 
+  def subjects
+    subjects = []
+    @current_user.tasks.each do |task|
+      subjects << task.subject.name
+    end
+    subjects
+  end
+
+  def subject_buttons
+    subject_buttons = []
+    subjects.each do |subject|
+      subject_buttons << {text: subject, callback_data: 'subject'}
+    end
+    p subject_buttons.last[:text]
+    subject_buttons
+  end
+
+  def task_buttons
+
+  end
+
   def choose_task
     tasks = []
     task_buttons = []
     @current_user.tasks.each_with_index do |task, index|
-      tasks << task.title
+      tasks << task.title if task.subject.name == subject_buttons[index][:text]
       task_buttons << {text: tasks[index], callback_data: 'task'}
     end
     respond_with :message, text: 'Choose your task', reply_markup: {
       inline_keyboard: [
         task_buttons,
         [
-          { text: 'Back', callback_data: 'back_to_subjects'}
+          { text: 'Back', callback_data: 'back_to_subject_menu'}
         ]
       ]
     }
@@ -79,9 +95,11 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       p task
       answer_callback_query 'Status changed to Done'
     when 'subject'
-      edit_message :message, {}
-    when 'back_to_subjects'
-      edit_message main_inline_menu!
+      choose_task
+    when 'back_to_subject_menu'
+      main_inline_menu!
+    when 'task'
+
     end
 
   end
