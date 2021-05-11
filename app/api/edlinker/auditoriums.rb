@@ -49,19 +49,17 @@ class Edlinker::Auditoriums < Grape::API
 
       current_auditorium.tasks.map do |task|
         {
-          task_id: task.id,
           title: task.title,
           number: task.number,
           description: task.description,
           subject_name: task.subject&.name,
           urls: task.url,
-          created_at: task.created_at,
           author: {
             name: teacher.first_name,
             surname: teacher.last_name
           }
          }
-      end
+      end.uniq
     end
   end
 end
