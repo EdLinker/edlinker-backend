@@ -58,7 +58,7 @@ class Edlinker::Tasks < Grape::API
     users_with_task = User.joins(:tasks).includes(:group).where('tasks.number = ?', params[:number]).pluck('users.id', 'users.first_name', 'users.last_name', 'tasks.status', 'groups.name')
     users_with_task.map do |id, first_name, last_name, status, group_name|
       { id: id, first_name: first_name, last_name: last_name, status: status, group_name: group_name }
-    end
+    end.uniq
   end
 end
 
