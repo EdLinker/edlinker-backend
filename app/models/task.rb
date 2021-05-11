@@ -2,7 +2,7 @@ class Task < ApplicationRecord
   paginates_per 5
 
   has_many   :messages
-  has_one    :user
+  belongs_to :user
   belongs_to :auditorium
   belongs_to :subject
 
