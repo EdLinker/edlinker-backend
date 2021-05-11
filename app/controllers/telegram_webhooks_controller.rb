@@ -40,12 +40,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     subjects.each do |subject|
       subject_buttons << {text: subject, callback_data: 'subject'}
     end
-    p subject_buttons.last[:text]
     subject_buttons
-  end
-
-  def task_buttons
-
   end
 
   def choose_task
@@ -118,6 +113,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     else
       update_tg_data
       respond_with :message, text: t('telegram_webhooks.phone_number.saved')
+      main_inline_menu!
     end
   end
 
@@ -127,7 +123,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def update_tg_data
     @current_user = User.find_by(phone_number: @contact)
-    puts "This is #{@current_user.first_name}"
     tg_data = {user_id: from['id'], chat_id: chat['id']}
     @current_user.update_column(:telegram_data, tg_data)
   end
