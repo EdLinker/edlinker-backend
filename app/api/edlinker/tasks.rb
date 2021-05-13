@@ -14,9 +14,9 @@ class Edlinker::Tasks < Grape::API
           number: task.number,
           description: task.description,
           author: {
-            id: current_user.id,
-            name: current_user.first_name,
-            surname: current_user.last_name
+            id: task.author_id,
+            name: User.find_by(id: task.author_id).first_name,
+            surname: User.find_by(id: task.author_id).last_name
           },
           subject_name: task.subject&.name,
           status: task.status,
@@ -55,9 +55,9 @@ class Edlinker::Tasks < Grape::API
     validate_teacher
     current_user = authorized_user
     error!('User not found') unless current_user
-    users_with_task = User.joins(:tasks).includes(:group).where('tasks.number = ? AND tasks.auditorium_id = ?', params[:number], params[:auditorium_id]).pluck('users.id', 'users.first_name', 'users.last_name', 'tasks.status', 'groups.name')
-    users_with_task.map do |id, first_name, last_name, status, group_name|
-      { id: id, first_name: first_name, last_name: last_name, status: status, group_name: group_name }
+    users_with_task = User.joins(:tasks).includes(:group).where('tasks.number = ? AND tasks.auditorium_id = ?', params[:number], params[:auditorium_id]).pluck('users.id', 'users.first_name', 'users.last_name', 'tasks.title', 'tasks.status', 'groups.name')
+    users_with_task.map do |id, first_name, last_name, title, status, group_name|
+      { id: id, first_name: first_name, last_name: last_name, title: title, status: status, group_name: group_name }
     end.uniq
   end
 end
