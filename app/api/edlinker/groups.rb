@@ -4,14 +4,11 @@ class Edlinker::Groups < Grape::API
   get 'groups' do
     current_user = authorized_user
     validate_teacher
-    current_user.auditoriums.includes(:subject).map do |auditorium|
-      auditorium.groups.map do |group|
+    Group.joins(:auditoriums).where('auditoriums.user_id = ?', current_user.id).distinct.map do |group|
       {
           group_id: group.id,
-          auditorium_id: group.auditorium.id,
           group_name: group.name,
           student_count: group.users.count,
-          subject: group.subject&.name,
           course_number: group.course_number,
           group_leader: {
             id: group.group_leader_id,
@@ -19,7 +16,6 @@ class Edlinker::Groups < Grape::API
             last_name: group.group_leader_surname
           }
        }
-      end
     end
   end
 end
