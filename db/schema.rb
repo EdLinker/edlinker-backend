@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_180702) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "avatar"
-    t.json "telegram_data"
+    t.jsonb "telegram_data"
     t.bigint "group_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end

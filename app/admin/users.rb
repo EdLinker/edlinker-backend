@@ -10,7 +10,6 @@ ActiveAdmin.register User do
     column :phone_number
     column :email
     column :roles
-    column :telegram_data
     column :group_id
     column :created_at
     actions

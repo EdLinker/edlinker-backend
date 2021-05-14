@@ -11,7 +11,6 @@ class User < ApplicationRecord
   belongs_to  :group, optional: true
   has_many  :auditoriums
   has_many :messages, as: :author
-  has_many :messages
   has_many :tasks
 
   scope :telegram_users, -> { where.not(telegram_data: nil) }
