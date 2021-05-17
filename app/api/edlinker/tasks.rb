@@ -15,8 +15,8 @@ class Edlinker::Tasks < Grape::API
           description: task.description,
           author: {
             id: task.author_id,
-            name: User.find_by(id: task.author_id).first_name,
-            surname: User.find_by(id: task.author_id).last_name
+            name: User.find_by(id: task.author_id)&.first_name,
+            surname: User.find_by(id: task.author_id)&.last_name
           },
           subject_name: task.subject&.name,
           status: task.status,
